@@ -1,0 +1,16 @@
+mixin pagecss(name)
+	link(rel="stylesheet", href="/pages/" + name + "/page.css")
+
+mixin pagejs(name)
+	script(src="/pages/" + name + "/page.js")
+
+mixin icon(name)
+	svg(class="icon icon-" + name)
+		use(xlink:href="/interface/sprite.svg#" + name)
+
+mixin image(url, title)
+	img(alt=title src="interface/" + url)
+
+mixin link(url, text)
+	a(href=url)&attributes(attributes)= text
+	

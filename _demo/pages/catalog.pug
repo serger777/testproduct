@@ -1,0 +1,15 @@
+extends ../template/default
+
+block vars
+	- var title = "Каталог";
+	- var pagename = "catalog";
+
+block css
+	+pagecss(pagename)
+
+block js
+	+pagejs(pagename)
+
+block content
+	.container
+		include ../components/product-list

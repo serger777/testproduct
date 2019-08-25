@@ -1,0 +1,10 @@
+include ../mixins/renderProductItems
+
+
+.product-list(data-columns='4')
+	+renderProductItems(42)
+	
+
+.recents
+	h2.uppercase Недавно просмотренные
+	//include ../components/recent-glide

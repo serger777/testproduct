@@ -1,0 +1,65 @@
+html,
+body
+	font-family $font-family
+	font-size 14px
+	line-height 1.5
+	font-weight 400
+h1,
+h2,
+h3
+	margin 0 
+	line-height 1.5
+	font-family $font-family
+	font-weight 700
+	letter-spacing 0.5px
+	&.uppercase
+		text-transform uppercase
+h1
+	font-size 26px
+	&.huge
+		font-size 50px
+		line-height 1.2
+h2
+	font-size 20px
+h3
+	font-size 18px
+p
+	line-height 1.6
+	&.base-text
+		font-size 14px
+		line-height 1.6
+	&.caption
+		font-size 16px
+
+a,
+button
+	&:visited,
+	&:hover,
+	&:active,
+	&:focus
+		outline 0
+a
+	text-decoration none
+button
+	border none
+	font-family $font-family
+	cursor pointer
+
+@media (max-width $md)
+	h1
+		font-size 18px
+		&.huge
+			font-size 32px
+			line-height 1.3
+	h2
+		font-size 16px
+	h3
+		font-size 14px
+
+@media (max-width $xs)
+	body
+		font-size 13px
+	p
+		&.base-text
+			font-size 13px
+			line-height 1.7

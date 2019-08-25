@@ -1,0 +1,41 @@
+/* Fast resets */
+select-reset()
+	user-select none
+
+focus-reset()
+	outline 0 !important
+	box-shadow none !important
+	-webkit-tap-highlight-color rgba(0,0,0,0)
+
+autofill-reset($color)
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus
+		-webkit-text-fill-color $color
+		-webkit-box-shadow 0 0 0px 1000px #fff inset
+		transition background-color 5000s ease-in-out 0s
+
+/* Fonts and text styles */
+font-face($slug, $name, $type, $weight, $style)
+	$path = $slug+"/"+$type
+	@font-face
+		font-display block
+		font-family $name
+		src url($path+".woff2") format('woff2'), url($path+".woff") format('woff')
+		font-weight $weight
+		font-style $style
+
+ellipsis()
+	overflow hidden
+	text-overflow ellipsis
+	white-space nowrap
+
+placeholder-color($color)
+	&::-webkit-input-placeholder
+		color $color !important
+	&:-moz-placeholder
+		color $color !important
+	&::-moz-placeholder
+		color $color !important
+	&:-ms-input-placeholder
+		color $color !important

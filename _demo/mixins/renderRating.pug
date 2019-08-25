@@ -1,0 +1,6 @@
+mixin renderRating(stars)
+	-var i = 0;
+	.rating
+		while i < stars
+			span.star(data-star=`${i++}`)
+				+icon('star')

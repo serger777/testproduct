@@ -1,0 +1,18 @@
+extends ./base
+
+block vars
+	- var title = 'Главный шаблон';
+
+block styles
+	link(rel="stylesheet", href="template.css")
+	block css
+
+block body
+	body
+		include ../components/header
+		main.main
+			block content
+		include ../components/footer
+		block scripts
+			script(src="template.js")
+			block js

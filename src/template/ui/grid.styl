@@ -1,0 +1,92 @@
+$grid-columns = 12
+$grid-gap = 1.8em
+
+$padding = 10px
+
+grid-width($col, $grid)
+	flex-basis ($col / $grid) * 100%
+	min-width ($col / $grid) * 100%
+	box-sizing border-box
+
+col-fixed($w, $p)
+	flex 0 0 $w
+	padding-left $p
+	padding-right $p
+
+setParam($param, $a, $b, $c, $d, $grid)
+	if $d != 0
+		@media (min-width $lg)
+			$param ($d / $grid) * 100%
+	if $c!= 0
+		@media (min-width $md) and (max-width $lg)
+			$param ($c / $grid) * 100%
+	if $b!= 0
+		@media (min-width $sm ) and (max-width $md)
+			$param ($b / $grid) * 100%
+	if $a!= 0
+		@media (max-width $sm)
+			$param ($a / $grid) * 100%
+
+col-offset($a, $b, $c, $d, $grid = 12) {
+	setParam(margin-left, $a, $b, $c, $d, $grid)
+}
+
+col-pull($a, $b, $c, $d, $grid = 12) {
+	setParam(right, $a, $b, $c, $d, $grid)
+}
+
+col-push($a, $b, $c, $d, $grid = 12) {
+	setParam(left, $a, $b, $c, $d, $grid)
+}
+
+col($a, $b, $c, $d, $grid = 12, $p = $padding)
+	//padding-left $p
+	//padding-right $p
+	@media (min-width $lg)
+		grid-width($d, $grid)
+	@media all and (min-width $md) and (max-width $lg)
+		grid-width($c, $grid)
+	@media all and (min-width $sm) and (max-width $md)
+		grid-width($b, $grid)
+	@media all and (max-width $sm)
+		grid-width($a, $grid)
+
+make-box($size, $media)
+	for $index in 1..$size
+		if $media != 0
+			.col-{$media}-{$index}
+				grid-width($index, $size)
+		if $media == 0
+			.col-{$index}
+				grid-width($index, $size)
+
+.box
+	display flex
+	flex-wrap wrap
+	flex 1 1 100%
+	justify-content space-between  
+
+.container
+	width 100%
+	margin 0 auto
+	padding 0 15px
+make-box($grid-columns, 0)
+
+@media (min-width: $xs)
+	make-box($grid-columns, "xs")
+
+@media (min-width: $sm)
+	make-box($grid-columns, "sm")
+	.container
+		max-width $sm
+
+@media (min-width: $md)
+	make-box($grid-columns, "md")
+	.container
+		max-width 1260px
+
+@media (min-width: $lg)
+	make-box($grid-columns, "lg")
+	.container
+		max-width $lg
+		padding 0 60px

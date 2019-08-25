@@ -1,0 +1,9 @@
+include ./renderRating
+
+mixin renderProductItems(number)
+	-var n = 0;
+	while n < number
+		.product-item
+			img(src="")
+			button.favorite.js-favorite(type="default")
+				+icon('heart_background')
