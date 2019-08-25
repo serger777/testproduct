@@ -1,4 +1,6 @@
 extends ../template/default
+include ../mixins/renderProductItems
+include ../mixins/renderProductSlider
 
 block vars
 	- var title = "Каталог";
@@ -12,4 +14,12 @@ block js
 
 block content
 	.container
-		include ../components/product-list
+		h1 Список карточек
+		.product-list
+			+renderProductItems(20)
+		h2  Слайдер карточек
+		.slider
+			.slider-wrap.product-list
+			.controls-wrap
+		
+		

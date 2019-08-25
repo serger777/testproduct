@@ -1,138 +1,113 @@
 import './index.styl'
+import ProductListItem from "../ProductListItem";
 
-export default class SlideBullet {
-	constructor(el, hover) {
-		this.el = el;
-		this.hover = hover || false;
-		this.slide = this.el.querySelectorAll(".slide-item");
-		this.slideList = this.el.querySelector(".slide-list");
-		this.picture = this.el.querySelector(".slide-item img");
-		this.bullet = this.el.querySelectorAll(".bullet");
-		this.target = 1;
+export default class Slider {
+	constructor(el) {
+		this.el = el
+		this.slider = this.el.querySelector(".slider-wrap");
+		this.controlsWrap = this.el.querySelector(".controls-wrap");
+		this.startData = 0;
+		this.target = 5;
 		this.init();
 	}
 
-	init() {
-		this.initSlider();
-
-		if (this.hover) {
-			this.hoverBulletHandeler();
-		} else {
-			this.clickBulletHandeler();
-		}
-		this.swipeSliderHandler()
-
-	}
-
-	hoverBulletHandeler() {
-		this.bullet.forEach(item => {
-			item.addEventListener("mouseenter", (e) => {
-				let target = e.currentTarget;
-				let src = e.target.dataset.src;
-				this.picture.src = src;
-				this.bullet.forEach(item => {
-					if (target === item) {
-						item.classList.add("active")
-					} else {
-						item.classList.remove("active")
-					}
-				});
-			})
-		})
+	async init() {
+		await fetch("/slider.json")
+			.then(response => response.json())
+			.then(slider => {
+				this.dataSlider = slider;
+			});
+		await this.initSlider();
+		this.initChangeSlider();
 
 	}
 
-	initSlider() {
-		this.slide.forEach((item, index) => {
-			item.dataset.slide = index;
-		})
-	}
+	async initSlider() {
+		await this.dataSlider.slider.forEach((item, idx) => {
+			const sliderItem = `
+				<img src='${item.img}'>
+				  <button class="name">${item.name}</button>
+				  <div class="wrap">
+					<button class="user">${item.username}</button>
+					<button class="star">
+					  <svg class="icon icon-star">
+						<use xlink:href="/interface/sprite.svg#star"></use>
+					  </svg><span>(${item.star})</span>
+					</button>
+				  </div>
+				  <div class="wrap">
+					<button class="favorite" type="default">
+					  <svg class="icon icon-heart_background">
+						<use xlink:href="/interface/sprite.svg#heart_background"></use>
+					  </svg>
+					</button>
+					<div class="price-item">${item.price}</div>
+				  </div>
+		`;
 
-	slideChange(target) {
-		const changeClass = (list, data) => {
-			if (Number(list.dataset.glideDir) === Number(data) || Number(list.dataset.slide) === Number(data)) {
-				list.classList.add("active")
-			} else {
-				list.classList.remove("active")
+			const sliderShow = () => {
+				const sliderDiv = document.createElement("div");
+				sliderDiv.classList = "product-item slider-item";
+				sliderDiv.innerHTML = sliderItem;
+				this.slider.appendChild(sliderDiv);
+			};
+
+			if (idx >= this.startData && idx < this.target) {
+				sliderShow()
+				
 			}
-		}
 
-		this.slide.forEach(list => {
-			changeClass(list, target)
 		});
-		this.bullet.forEach(list => {
-			changeClass(list, target)
+		const listItems = document.querySelectorAll('.slider .product-item');
+		listItems.forEach(item => {
+			new ProductListItem(item);
 		});
-
-
 	}
 
-	clickBulletHandeler() {
-		let intervalSlide;
-		this.bullet.forEach(item => {
-			item.addEventListener("click", (e) => {
-				clearInterval(intervalSlide);
-				this.target = e.currentTarget.dataset.glideDir;
-				this.slideChange(this.target);
-				startInterval()
-			})
+	initChangeSlider() {
+		this.sliderControl = document.createElement("div");
+		this.controlsWrap.appendChild(this.sliderControl);
+		this.next = document.createElement("button");
+		this.next.classList = "slider-arrow next ";
+		this.prev = document.createElement("button");
+		this.prev.classList = "slider-arrow prev ";
+		this.sliderControl.appendChild(this.prev);
+		this.sliderControl.appendChild(this.next);
+
+		this.next.addEventListener("click", () => {
+			this.startData = this.startData + 5;
+			this.target = this.target + 5;
+			
+			if (this.startData < 0) {
+				this.startData = this.dataSlider.slider.length - 5;
+				this.target = this.dataSlider.slider.length;
+			}
+			if (this.target > this.dataSlider.slider.length){
+				this.startData = 0;
+				this.target = 5;
+			}
+			this.slider.innerHTML = "";
+			this.initSlider()
+			console.log(this.startData);
+			console.log(this.target );
 		});
-		let startInterval = () => {
-			intervalSlide = setInterval(() => {
-				this.slideChange(this.target);
-				this.target++;
-				if (this.target > this.bullet.length - 1) {
-					this.target = 0
-				}
-			}, 5000)
-		};
-		startInterval()
-		this.el.addEventListener("mouseenter",()=>{
-			clearInterval(intervalSlide);
-		});
-		this.el.addEventListener("mouseleave",()=>{
-			startInterval();
+		this.prev.addEventListener("click", () => {
+			this.startData = this.startData - 5;
+			this.target = this.target - 5;
+			console.log(this.dataSlider.slider.length);
+			if (this.startData < 0) {
+				this.startData = this.dataSlider.slider.length - 5;
+				this.target = this.dataSlider.slider.length;
+			}
+			if (this.target > this.dataSlider.slider.length){
+				this.startData = 0;
+				this.target = 5;
+			} 
+			this.slider.innerHTML = "";
+			console.log(this.startData);
+			console.log(this.target );
+			this.initSlider()
 		})
 	}
 
-	swipeSliderHandler() {
-		let currentX;
-		this.slideList.addEventListener("touchstart", (e) => {
-			e.preventDefault();
-			swipeStart(e);
-		});
-		this.slideList.addEventListener("mousedown", (e) => {
-			e.preventDefault();
-			swipeStart(e);
-		});
-		this.slideList.addEventListener("touchend", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			swipeEnd(e)
-		});
-		this.slideList.addEventListener("mouseup", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			swipeEnd(e)
-		});
-		const swipeStart = (e) => {
-			currentX = e.touches ? e.touches[0].pageX : e.pageX;
-		};
-		const swipeEnd = (e) => {
-			let	newX = e.touches ? e.changedTouches[0].pageX : e.pageX;
-			if (currentX > newX) {
-				this.target++;
-				if (this.target > this.bullet.length - 1) {
-					this.target = 0
-				}
-				this.slideChange(this.target);
-			} else if (currentX < newX) {
-				this.target--;
-				if (this.target < 0) {
-					this.target = this.bullet.length - 1;
-				}
-				this.slideChange(this.target);
-			}
-		}
-	}
 }

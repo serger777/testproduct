@@ -1,57 +1,50 @@
 import './index.styl';
-// import SizeSelector from 'Components/SizeSelector';
+
 
 class ProductListItem {
 	constructor(el) {
 		this.el = el;
-		this.bullets = this.el.querySelector('.bullets');
-		this.addPhotosInterval;
-		if(this.bullets)
-			this.bulletsItem = this.bullets.querySelectorAll('span');
-		this.init();
+		this.user = this.el.querySelector(".user");
+		this.star = this.el.querySelector(".star");
+		this.heart = this.el.querySelector(".favorite");
+		this.name = this.el.querySelector(".name");
+
+		this.initHandler();
 	}
 
-	init() {
+	initHandler() {
+		this.clickHadler(this.user);
+		this.clickHadler(this.star);
+		this.clickHadler(this.heart);
+		this.clickHadler(this.name);
+		this.nameSliceHandler()
+	}
 	
+	
+	clickHadler(element){
+		element.addEventListener("click",(e)=>{
+			let target = e.currentTarget;
+			let btn = target.closest("button");
+			if(btn){
+				btn.classList.toggle("active");
+			}
+			else{
+				target.classList.toggle("active");
+			}
+			
+		})
 	}
-
-	startAddPhotos(){
-		let target = this.el.querySelector('img');
-		this.addPhotosInterval = setInterval((e)=>{
-			let next = this.bullets.querySelector('.active').nextElementSibling && this.bullets.querySelector('.active').nextElementSibling.matches('span') ? this.bullets.querySelector('.active').nextElementSibling : undefined;
-			if (!next) next = this.bullets.querySelector('span');
-			this.bulletsItem.forEach(span=>{
-				span.classList.remove('active');
-			})
-			next.classList.add('active');
-			this.viewAddPhotos();
-		},2000);
-	};
-
-	viewAddPhotos(){
-		let target = this.el.querySelector('img');
-		let active = this.bullets.querySelector('.active');
-		if (active) {
-			let src = active.dataset.src;
-			let srcset = active.dataset.srcset;
-			if (src && srcset) {
-				target.src = src;
-				target.srcset = srcset;
-			};
-		};
-	};
-
-	stopAddPhotos(){
-        var target = this.el.querySelector('img');
-        clearInterval(this.addPhotosInterval);
-        this.bulletsItem.forEach(span=>{
-            span.classList.remove('active');
-        })
-        var first = this.bullets.querySelector('span');
-        first.classList.add('active');
-        target.src = first.dataset.src;
-        target.srcset = first.dataset.srcset;
-    };
+	
+	nameSliceHandler(){
+		let text = this.name.textContent;
+		if(text.length>30){
+			let str = `${text.slice(0, 30)}...` ;
+			this.name.textContent = str;
+		}
+		
+	}
+	
+	
 	
 
 }

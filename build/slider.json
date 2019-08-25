@@ -1,0 +1,92 @@
+{
+  "slider": [
+    {
+      "id": 0,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username":"username",
+      "price": 234
+    },
+    {
+      "id": 1,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "username": "username",
+      "star": 3245,
+      "price": 345
+    },
+    {
+      "id": 2,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "username",
+      "price": 4
+    },
+    {
+      "id": 3,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "username",
+      "price": 23
+    },
+    {
+      "id": 4,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "username",
+      "price": 324
+    },
+    {
+      "id": 5,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "username",
+      "price": 79
+    },
+    {
+      "id": 6,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "username": "username",
+      "star": 3245,
+      "price": 657
+    },
+    {
+      "id": 7,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "username",
+      "price": 567
+    },
+    {
+      "id": 8,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "username": "usernamewqe",
+      "star": 67,
+      "price": 435
+    },
+    {
+      "id": 9,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "serget",
+      "price": 34435
+    },
+    {
+      "id": 10,
+      "img": "/interface/images/img.jpg",
+      "name": "первый товар в карточке",
+      "star": 123,
+      "username": "dfgdfg",
+      "price": 233
+    }
+  ]
+}

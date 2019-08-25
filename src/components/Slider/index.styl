@@ -1,24 +1,19 @@
-
 .slider
-	.slide-item
-		display none
-		img
-			width 100%
-		&.active
-			display inline-block
-			
-.bullets
-	margin 15px auto
-	text-align center
-.bullet
-	width 8px
-	height 8px
-	padding 5px
-	background $n15
+	position relative
+.slider-arrow
+	width 24px
+	height 24px
 	display inline-block
-	border-radius 50%
-	margin 0 10px
-	cursor pointer
-	&.active
-		background black
-
+	position absolute
+	top 50%
+	margin-top -20px
+	border none
+	&.next
+		&:after
+			content ">"
+		right 0
+		
+	&.prev
+		&:after
+			content "<"
+		left 0	
